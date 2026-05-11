@@ -7,6 +7,9 @@ workflows:
       - name: Get Flutter packages
         script: flutter packages pub get
       - name: Flutter build ipa
-        script: flutter build ipa --release --no-codesign
+        script: |
+          # Принудительно заходим в папку ios и устанавливаем зависимости
+          cd ios && pod install --repo-update && cd ..
+          flutter build ipa --release --no-codesign
     artifacts:
       - build/ios/ipa/*.ipa
